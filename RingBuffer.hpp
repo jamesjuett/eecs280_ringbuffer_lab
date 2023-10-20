@@ -135,11 +135,10 @@ private:
     // num_elts remains the same
   }
 
-  // REQUIRES: destination points to the start of an array with length >= num_elts
-  // EFFECTS:  Copies all elements from this ring buffer into the provided
-  //           destination array. They are copied to beginning of the destination
-  //           array (at positions 0...num_elts-1), regardless of where they are
-  //           in the original internal data array.
+  // REQUIRES: this RingBuffer has capacity >= other.num_elts
+  // EFFECTS:  Copies all elements from the other ring buffer into this one,
+  //           replacing any existing elements. They are copied to beginning
+  //           of the data array and the head/tail are adjusted accordingly.
   void copy_data_from(const RingBuffer &other) {
 
     // Copy elements from other, placing at the start of our own array
