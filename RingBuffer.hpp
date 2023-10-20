@@ -26,7 +26,7 @@ public:
   RingBuffer &operator=(const RingBuffer &rhs) {
     if (this == &rhs) { return *this; }
     capacity = rhs.capacity;
-    delete data;
+    delete[] data;
     data = new T[rhs.capacity];
     copy_data_from(rhs);
     return *this;
@@ -126,7 +126,7 @@ private:
       new_data[i] = at(i);
     }
 
-    delete data;
+    delete[] data;
     data = new_data;
 
     head = 0;
