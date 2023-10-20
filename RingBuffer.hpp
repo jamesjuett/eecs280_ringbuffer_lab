@@ -70,10 +70,6 @@ public:
     return data[(head + index) % capacity];
   }
 
-  ~RingBuffer() {
-    delete[] data;
-  }
-
   // EFFECTS : prints the buffer to os 
   void print(std::ostream &os) const{
     os << "[ ";
