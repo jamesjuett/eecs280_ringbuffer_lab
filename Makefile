@@ -9,6 +9,9 @@ test: RingBuffer_tests.exe
 
 RingBuffer_tests.exe: RingBuffer_tests.cpp RingBuffer.hpp
 	$(CXX) $(CXXFLAGS) $< -o $@
+	
+performance.exe: performance.cpp RingBuffer.hpp
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 .SUFFIXES:
 
