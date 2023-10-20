@@ -11,15 +11,15 @@
 using namespace std;
 
 
-void test_vector() {
+void test_vector(int N) {
   // Fill a vector with 100,000 integers
   vector<int> v;
   for (int i = 0; i < 100000; i++) {
     v.push_back(i);
   }
 
-  // Push and pop a million times
-  for (int i = 0; i < 1000000; i++) {
+  // Push and pop N times
+  for (int i = 0; i < N; i++) {
     v.push_back(i);
     
     // Vectors have no pop_front() function, but the
@@ -30,7 +30,7 @@ void test_vector() {
 }
 
 // same as above but use a RingBuffer instead of a vector
-void test_ringbuffer() {
+void test_ringbuffer(int N) {
   RingBuffer<int> rb;
 
   // Fill a RingBuffer with 100,000 integers
@@ -38,8 +38,8 @@ void test_ringbuffer() {
     rb.push_back(i);
   }
 
-  // Push and pop a million times
-  for (int i = 0; i < 1000000; i++) {
+  // Push and pop N times
+  for (int i = 0; i < N; i++) {
     rb.push_back(i);
     rb.pop_front();
   }
@@ -47,8 +47,8 @@ void test_ringbuffer() {
 
 
 int main(int argc, char *argv[]) {
-  if (argc != 2) {
-    cout << "Usage: ./performance.exe [container_type]" << endl;
+  if (argc != 3) {
+    cout << "Usage: ./performance.exe [container_type] [N]" << endl;
     return 1;
   }
 
@@ -58,10 +58,12 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
+  int N = stoi(argv[2]);
+
   if (container_type == "vector") {
-    test_vector();
+    test_vector(N);
   } else {
-    test_ringbuffer();
+    test_ringbuffer(N);
   }
 
 }
