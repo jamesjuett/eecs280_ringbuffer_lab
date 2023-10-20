@@ -107,7 +107,7 @@ private:
       new_data[i] = at(i);
     }
 
-    delete data;
+    delete[] data;
     data = new_data;
 
     head = 0;
