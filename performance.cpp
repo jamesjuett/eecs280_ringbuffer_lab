@@ -12,9 +12,9 @@ using namespace std;
 
 
 void test_vector(int N) {
-  // Fill a vector with 100,000 integers
+  // Fill a vector with N integers
   vector<int> v;
-  for (int i = 0; i < 100000; i++) {
+  for (int i = 0; i < N; i++) {
     v.push_back(i);
   }
 
@@ -33,8 +33,8 @@ void test_vector(int N) {
 void test_ringbuffer(int N) {
   RingBuffer<int> rb;
 
-  // Fill a RingBuffer with 100,000 integers
-  for (int i = 0; i < 100000; i++) {
+  // Fill a RingBuffer with N integers
+  for (int i = 0; i < N; i++) {
     rb.push_back(i);
   }
 
