@@ -26,20 +26,20 @@ public:
   // EFFECTS:  Adds a new value to the back of the buffer
   //           moves tail to the new position
   void push_back(const T &value) {
-    // TODO: Write your implementation here
+    assert(false); // TODO: Replace with your implementation
   }
 
   // REQUIRES: buffer is not empty
   // EFFECTS:  Removes the element at the front of the buffer
   //           moves head to the new position
   void pop_front() {
-    // TODO: Write your implementation here
+    assert(false); // TODO: Replace with your implementation
   }
 
   // REQUIRES: buffer is not empty
   // EFFECTS:  Returns the value at the front of the buffer
   T &front() {
-    // TODO: Write your implementation here
+    assert(false); // TODO: Replace with your implementation
   }
 
   // EFFECTS:  Returns the current size of the buffer
