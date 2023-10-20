@@ -21,25 +21,40 @@ public:
     
     copy_data_from(other);
   }
+
+  RingBuffer &operator=(const RingBuffer &rhs) {
+    if (this == &rhs) { return *this; }
+    capacity = rhs.capacity;
+    delete data;
+    data = new T[rhs.capacity];
+    copy_data_from(rhs);
+    return *this;
+  }
     
   // REQUIRES: buffer is not full
   // EFFECTS:  Adds a new value to the back of the buffer
   //           moves tail to the new position
   void push_back(const T &value) {
-    assert(false); // TODO: Replace with your implementation
+    if (num_elts == capacity) {
+      grow();
+    }
+    data[tail] = value;
+    tail = (tail + 1) % capacity;
+    ++num_elts;
   }
 
   // REQUIRES: buffer is not empty
   // EFFECTS:  Removes the element at the front of the buffer
   //           moves head to the new position
   void pop_front() {
-    assert(false); // TODO: Replace with your implementation
+    head = (head + 1) % capacity;
+    --num_elts;
   }
 
   // REQUIRES: buffer is not empty
   // EFFECTS:  Returns the value at the front of the buffer
   T &front() {
-    assert(false); // TODO: Replace with your implementation
+    return data[head];
   }
 
   // EFFECTS:  Returns the current size of the buffer
