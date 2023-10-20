@@ -2,6 +2,7 @@
 #define RINGBUFFER_HPP
 
 #include <iostream>
+#include <cassert>
 
 template <typename T>
 class RingBuffer {
