@@ -47,14 +47,9 @@ public:
     return num_elts;
   }
 
-   // EFFECTS:  Returns true if this RingBuffer is empty, false otherwise.
+  // EFFECTS:  Returns true if this RingBuffer is empty, false otherwise.
   bool empty() const {
     return num_elts == 0;
-  }
-
-   // EFFECTS:  Returns true if this RingBuffer is at capacity, false otherwise.
-  bool full() const {
-    return num_elts == capacity;
   }
 
   // REQUIRES: 0 <= index and index < number of elements in this RingBuffer.
