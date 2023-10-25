@@ -31,8 +31,7 @@ public:
     copy_data_from(rhs);
     return *this;
   }
-    
-  // REQUIRES: buffer is not full
+  
   // EFFECTS:  Adds a new value to the back of the buffer
   //           moves tail to the new position
   void push_back(const T &value) {
