@@ -23,16 +23,7 @@ public:
     copy_data_from(other);
   }
 
-  RingBuffer &operator=(const RingBuffer &rhs) {
-    if (this == &rhs) { return *this; }
-    capacity = rhs.capacity;
-    delete[] data;
-    data = new T[rhs.capacity];
-    copy_data_from(rhs);
-    return *this;
-  }
-  
-  // EFFECTS:  Adds a new value to the back of the buffer
+    // EFFECTS:  Adds a new value to the back of the buffer
   //           moves tail to the new position
   void push_back(const T &value) {
     if (num_elts == capacity) {
@@ -77,10 +68,6 @@ public:
   // EFFECTS:  Returns (by const reference) the element that is index positions from head.
   const T & at(int index) const {
     return data[(head + index) % capacity];
-  }
-
-  ~RingBuffer() {
-    delete[] data;
   }
 
   // EFFECTS : prints the buffer to os 
