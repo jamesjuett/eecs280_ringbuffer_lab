@@ -66,9 +66,10 @@ static void time_all(int N) {
     circularbuffer_total += time3 - time2;
   }
   cout << "Average time for " << N << " elements with a vector: "
-       << vector_total.count() / NUM_ITERATIONS << endl;
+       << vector_total.count() / NUM_ITERATIONS << " seconds" << endl;
   cout << "Average time for " << N << " elements with a CircularBuffer: "
-       << circularbuffer_total.count() / NUM_ITERATIONS << endl;
+       << circularbuffer_total.count() / NUM_ITERATIONS << " seconds"
+       << endl;
 }
 
 
