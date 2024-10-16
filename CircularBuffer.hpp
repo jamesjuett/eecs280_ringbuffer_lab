@@ -15,14 +15,15 @@ public:
     head(0), tail(0), num_elts(0), capacity(INITIAL_CAPACITY) {
 
   }
-  
+
+  // Copy constructor -- we'll cover this SOON(TM).
   CircularBuffer(const CircularBuffer<T> &other)
     : data(new T[other.capacity]),
       capacity(other.capacity) {
-    
     copy_data_from(other);
   }
 
+  // MODIFIES: *this
   // EFFECTS:  Adds a new value to the back of the buffer
   //           moves tail to the new position
   void push_back(const T &value) {
@@ -30,6 +31,7 @@ public:
   }
 
   // REQUIRES: buffer is not empty
+  // MODIFIES: *this
   // EFFECTS:  Removes the element at the front of the buffer
   //           moves head to the new position
   void pop_front() {
@@ -43,7 +45,7 @@ public:
   }
 
   // EFFECTS:  Returns the current size of the buffer
-  int size() const{
+  int size() const {
     return num_elts;
   }
 
@@ -64,7 +66,7 @@ public:
     return data[(head + index) % capacity];
   }
 
-  // EFFECTS : prints the buffer to os 
+  // EFFECTS:  Prints the buffer to os.
   void print(std::ostream &os) const{
     os << "[ ";
     for (int i = 0; i < num_elts; ++i) {
@@ -78,30 +80,32 @@ public:
 
 private:
 
-  // The capacity (maximum size) of an CircularBuffer is 30 elements.
+  // The initial capacity of a CircularBuffer when it is created
   static const int INITIAL_CAPACITY = 4;
 
   // The array to hold the N elements stored in this circular buffer in positions determined
   // by head and tail
-  T * data;
+  T * data;      // INVARIANT: data points to the start of an array of capacity elements
 
   // head is the index marking the beginning of the data in the buffer
   // tail is the index where a new element would be added in the buffer
   // num_elts is the number of elements currently in the buffer
-  int head;
-  int tail;
-  int num_elts;
+  int head;      // INVARIANT: 0 <= head < capacity
+  int tail;      // INVARIANT: 0 <= tail < capacity
+  int num_elts;  // INVARIANT: 0 <= num_elts <= capacity
   int capacity;
 
+  // MODIFIES: *this
+  // EFFECTS:  Replaces the array used to store the elements with a
+  //           new, larger array.
   void grow() {
-
     // Place elements at the start of a new, larger array
     T *new_data = new T[2*capacity];
     for(int i = 0; i < num_elts; ++i) {
       new_data[i] = at(i);
     }
 
-    delete[] data;
+    delete[] data;  // discard the old array
     data = new_data;
 
     head = 0;
@@ -111,6 +115,7 @@ private:
   }
 
   // REQUIRES: this CircularBuffer has capacity >= other.num_elts
+  // MODIFIES: *this
   // EFFECTS:  Copies all elements from the other circular buffer into this one,
   //           replacing any existing elements. They are copied to beginning
   //           of the data array and the head/tail are adjusted accordingly.
@@ -121,7 +126,7 @@ private:
       // using .at(i) accounts for possibly different head/tail of other
       data[i] = other.at(i);
     }
-    
+
     // Adjust head/tail and num_elts to match new data
     head = 0;
     tail = other.num_elts;
@@ -130,11 +135,11 @@ private:
 
 };
 
-// EFFECTS : overloaded operator that prints the buffer to os
+// EFFECTS:  overloaded operator that prints the buffer to os
 template <typename T>
 std::ostream& operator<<(std::ostream &os, const CircularBuffer<T> &rb) {
-    rb.print(os);
-    return os;
+  rb.print(os);
+  return os;
 }
 
 #endif // Do not remove this. Write all your code above this line.
