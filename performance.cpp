@@ -1,12 +1,12 @@
-// A program that compares a vector and RingBuffer for implementing a
+// A program that compares a vector and CircularBuffer for implementing a
 // qeueue.  The program will run a series of push and pop operations
-// on both the vector and RingBuffer and compare the time it takes to
+// on both the vector and CircularBuffer and compare the time it takes to
 // run through a million operations.
 
 #include <iostream>
 #include <vector>
 #include <string>
-#include "RingBuffer.hpp"
+#include "CircularBuffer.hpp"
 
 using namespace std;
 
@@ -29,11 +29,11 @@ void test_vector(int N) {
   }
 }
 
-// same as above but use a RingBuffer instead of a vector
-void test_ringbuffer(int N) {
-  RingBuffer<int> rb;
+// same as above but use a CircularBuffer instead of a vector
+void test_circularbuffer(int N) {
+  CircularBuffer<int> rb;
 
-  // Fill a RingBuffer with N integers
+  // Fill a CircularBuffer with N integers
   for (int i = 0; i < N; i++) {
     rb.push_back(i);
   }
@@ -53,8 +53,8 @@ int main(int argc, char *argv[]) {
   }
 
   string container_type = argv[1];
-  if(container_type != "vector" && container_type != "ringbuffer") {
-    cout << "Error: container type must be \"vector\" or \"ringbuffer\"" << endl;
+  if(container_type != "vector" && container_type != "circularbuffer") {
+    cout << "Error: container type must be \"vector\" or \"circularbuffer\"" << endl;
     return 1;
   }
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
   if (container_type == "vector") {
     test_vector(N);
   } else {
-    test_ringbuffer(N);
+    test_circularbuffer(N);
   }
 
 }

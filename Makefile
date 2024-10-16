@@ -4,13 +4,13 @@ CXX ?= g++
 # Compiler flags
 CXXFLAGS ?= --std=c++17 -Wall -Werror -pedantic -g -Wno-sign-compare -Wno-comment
 
-test: RingBuffer_tests.exe
-	./RingBuffer_tests.exe
+test: CircularBuffer_tests.exe
+	./CircularBuffer_tests.exe
 
-RingBuffer_tests.exe: RingBuffer_tests.cpp RingBuffer.hpp
+CircularBuffer_tests.exe: CircularBuffer_tests.cpp CircularBuffer.hpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 	
-performance.exe: performance.cpp RingBuffer.hpp
+performance.exe: performance.cpp CircularBuffer.hpp
 	$(CXX) $(CXXFLAGS) $< -o $@
 
 .SUFFIXES:

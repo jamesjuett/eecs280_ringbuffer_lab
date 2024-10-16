@@ -1,22 +1,22 @@
-#ifndef RINGBUFFER_HPP
-#define RINGBUFFER_HPP
+#ifndef CIRCULARBUFFER_HPP
+#define CIRCULARBUFFER_HPP
 
 #include <iostream>
 #include <cassert>
 
 template <typename T>
-class RingBuffer {
+class CircularBuffer {
 
 public:
 
-  // EFFECTS: Constructs an empty RingBuffer.
-  RingBuffer()
+  // EFFECTS: Constructs an empty CircularBuffer.
+  CircularBuffer()
     : data(new T[INITIAL_CAPACITY]),
     head(0), tail(0), num_elts(0), capacity(INITIAL_CAPACITY) {
 
   }
   
-  RingBuffer(const RingBuffer<T> &other)
+  CircularBuffer(const CircularBuffer<T> &other)
     : data(new T[other.capacity]),
       capacity(other.capacity) {
     
@@ -47,18 +47,18 @@ public:
     return num_elts;
   }
 
-  // EFFECTS:  Returns true if this RingBuffer is empty, false otherwise.
+  // EFFECTS:  Returns true if this CircularBuffer is empty, false otherwise.
   bool empty() const {
     return num_elts == 0;
   }
 
-  // REQUIRES: 0 <= index and index < number of elements in this RingBuffer.
+  // REQUIRES: 0 <= index and index < number of elements in this CircularBuffer.
   // EFFECTS:  Returns (by reference) the element that is index positions from head.
   T & at(int index) {
     return data[(head + index) % capacity];
   }
 
-  // REQUIRES: 0 <= index and index < number of elements in this RingBuffer.
+  // REQUIRES: 0 <= index and index < number of elements in this CircularBuffer.
   // EFFECTS:  Returns (by const reference) the element that is index positions from head.
   const T & at(int index) const {
     return data[(head + index) % capacity];
@@ -78,10 +78,10 @@ public:
 
 private:
 
-  // The capacity (maximum size) of an RingBuffer is 30 elements.
+  // The capacity (maximum size) of an CircularBuffer is 30 elements.
   static const int INITIAL_CAPACITY = 4;
 
-  // The array to hold the N elements stored in this ring buffer in positions determined
+  // The array to hold the N elements stored in this circular buffer in positions determined
   // by head and tail
   T * data;
 
@@ -110,11 +110,11 @@ private:
     // num_elts remains the same
   }
 
-  // REQUIRES: this RingBuffer has capacity >= other.num_elts
-  // EFFECTS:  Copies all elements from the other ring buffer into this one,
+  // REQUIRES: this CircularBuffer has capacity >= other.num_elts
+  // EFFECTS:  Copies all elements from the other circular buffer into this one,
   //           replacing any existing elements. They are copied to beginning
   //           of the data array and the head/tail are adjusted accordingly.
-  void copy_data_from(const RingBuffer &other) {
+  void copy_data_from(const CircularBuffer &other) {
 
     // Copy elements from other, placing at the start of our own array
     for(int i = 0; i < other.num_elts; ++i) {
@@ -132,7 +132,7 @@ private:
 
 // EFFECTS : overloaded operator that prints the buffer to os
 template <typename T>
-std::ostream& operator<<(std::ostream &os, const RingBuffer<T> &rb) {
+std::ostream& operator<<(std::ostream &os, const CircularBuffer<T> &rb) {
     rb.print(os);
     return os;
 }
