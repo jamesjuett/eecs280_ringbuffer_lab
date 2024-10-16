@@ -1,17 +1,18 @@
-// A program that compares a vector and CircularBuffer for implementing a
-// qeueue.  The program will run a series of push and pop operations
-// on both the vector and CircularBuffer and compare the time it takes to
+// A program that compares a vector and CircularBuffer for implementing
+// a queue. The program will run a series of push and pop operations on
+// both the vector and CircularBuffer and compare the time it takes to
 // run through a million operations.
 
+#include <chrono>
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 #include "CircularBuffer.hpp"
 
 using namespace std;
 
 
-void test_vector(int N) {
+static void test_vector(int N) {
   // Fill a vector with N integers
   vector<int> v;
   for (int i = 0; i < N; i++) {
@@ -21,7 +22,7 @@ void test_vector(int N) {
   // Push and pop N times
   for (int i = 0; i < N; i++) {
     v.push_back(i);
-    
+
     // Vectors have no pop_front() function, but the
     // equivalent operation, v.erase(v.begin()) will remove
     // the first element and shift all the other elements down by one.
@@ -30,7 +31,7 @@ void test_vector(int N) {
 }
 
 // same as above but use a CircularBuffer instead of a vector
-void test_circularbuffer(int N) {
+static void test_circularbuffer(int N) {
   CircularBuffer<int> rb;
 
   // Fill a CircularBuffer with N integers
@@ -45,25 +46,37 @@ void test_circularbuffer(int N) {
   }
 }
 
+// time vector and CircularBuffer operations, averaging over 5 runs
+static void time_all(int N) {
+  static const int NUM_ITERATIONS = 5;
+  std::chrono::duration<double> vector_total =
+    std::chrono::duration<double>::zero();
+  std::chrono::duration<double> circularbuffer_total =
+    std::chrono::duration<double>::zero();
+  for (int i = 0; i < NUM_ITERATIONS; ++i) {
+    std::chrono::time_point<std::chrono::system_clock> time1 =
+      std::chrono::system_clock::now();
+    test_vector(N);
+    std::chrono::time_point<std::chrono::system_clock> time2 =
+      std::chrono::system_clock::now();
+    test_circularbuffer(N);
+    std::chrono::time_point<std::chrono::system_clock> time3 =
+      std::chrono::system_clock::now();
+    vector_total += time2 - time1;
+    circularbuffer_total += time3 - time2;
+  }
+  cout << "Average time for " << N << " elements with a vector: "
+       << vector_total.count() / NUM_ITERATIONS << endl;
+  cout << "Average time for " << N << " elements with a CircularBuffer: "
+       << circularbuffer_total.count() / NUM_ITERATIONS << endl;
+}
+
 
 int main(int argc, char *argv[]) {
-  if (argc != 3) {
-    cout << "Usage: ./performance.exe [container_type] [N]" << endl;
+  if (argc != 2) {
+    cout << "Usage: ./performance.exe [N]" << endl;
     return 1;
   }
-
-  string container_type = argv[1];
-  if(container_type != "vector" && container_type != "circularbuffer") {
-    cout << "Error: container type must be \"vector\" or \"circularbuffer\"" << endl;
-    return 1;
-  }
-
-  int N = stoi(argv[2]);
-
-  if (container_type == "vector") {
-    test_vector(N);
-  } else {
-    test_circularbuffer(N);
-  }
-
+  cout.precision(3);
+  time_all(stoi(argv[1]));
 }
