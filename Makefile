@@ -4,14 +4,17 @@ CXX ?= g++
 # Compiler flags
 CXXFLAGS ?= --std=c++17 -Wall -Werror -pedantic -g -Wno-sign-compare -Wno-comment
 
-test: RingBuffer_tests.exe
-	./RingBuffer_tests.exe
+# Performance compiler flags
+OPTFLAGS ?= --std=c++17 -Wall -Werror -pedantic -O3 -Wno-sign-compare -Wno-comment
 
-RingBuffer_tests.exe: RingBuffer_tests.cpp RingBuffer.hpp
+test: CircularBuffer_tests.exe
+	./CircularBuffer_tests.exe
+
+CircularBuffer_tests.exe: CircularBuffer_tests.cpp CircularBuffer.hpp
 	$(CXX) $(CXXFLAGS) $< -o $@
-	
-performance.exe: performance.cpp RingBuffer.hpp
-	$(CXX) $(CXXFLAGS) $< -o $@
+
+performance.exe: performance.cpp CircularBuffer.hpp
+	$(CXX) $(OPTFLAGS) $< -o $@
 
 .SUFFIXES:
 

@@ -1,1 +1,1 @@
-# eecs280_ringbuffer_lab
+# eecs280_circularbuffer_lab

@@ -3,18 +3,18 @@
 #include <string>
 
 #include "unit_test_framework.hpp"
-#include "RingBuffer.hpp"
+#include "CircularBuffer.hpp"
 
 using namespace std;
 
-TEST(ringbuffer_default_constructor) {
-  RingBuffer<int> rb;
+TEST(circularbuffer_default_constructor) {
+  CircularBuffer<int> rb;
   ASSERT_TRUE(rb.empty());
   ASSERT_EQUAL(rb.size(), 0);
 }
 
-TEST(ringbuffer_push_pop) {
-  RingBuffer<int> rb;
+TEST(circularbuffer_push_pop) {
+  CircularBuffer<int> rb;
   rb.push_back(5);
   ASSERT_EQUAL(rb.size(), 1);
   ASSERT_EQUAL(rb.front(), 5);
@@ -48,8 +48,8 @@ TEST(ringbuffer_push_pop) {
   ASSERT_TRUE(rb.empty());
 }
 
-TEST(ringbuffer_at) {
-  RingBuffer<int> rb;
+TEST(circularbuffer_at) {
+  CircularBuffer<int> rb;
   rb.push_back(5);
   rb.push_back(10);
   rb.push_back(15);
@@ -57,7 +57,7 @@ TEST(ringbuffer_at) {
   ASSERT_EQUAL(rb.at(1), 10);
   ASSERT_EQUAL(rb.at(2), 15);
 
-  const RingBuffer<int> &const_rb = rb;
+  const CircularBuffer<int> &const_rb = rb;
   ASSERT_EQUAL(const_rb.at(0), 5);
   ASSERT_EQUAL(const_rb.at(1), 10);
   ASSERT_EQUAL(const_rb.at(2), 15);
@@ -70,13 +70,13 @@ TEST(ringbuffer_at) {
 }
 
 // Tests for copy constructor
-TEST(ringbuffer_copy_constructor) {
-  RingBuffer<int> rb;
+TEST(circularbuffer_copy_constructor) {
+  CircularBuffer<int> rb;
   rb.push_back(5);
   rb.push_back(10);
   rb.push_back(15);
   
-  RingBuffer<int> rb2(rb);
+  CircularBuffer<int> rb2(rb);
   ASSERT_EQUAL(rb2.at(0), 5);
   ASSERT_EQUAL(rb2.at(1), 10);
   ASSERT_EQUAL(rb2.at(2), 15);
@@ -96,13 +96,13 @@ TEST(ringbuffer_copy_constructor) {
 }
 
 // Tests for assignment operator
-// TEST(ringbuffer_assignment_operator) {
-//   RingBuffer<int> rb;
+// TEST(circularbuffer_assignment_operator) {
+//   CircularBuffer<int> rb;
 //   rb.push_back(5);
 //   rb.push_back(10);
 //   rb.push_back(15);
   
-//   RingBuffer<int> rb2;
+//   CircularBuffer<int> rb2;
 //   rb2.push_back(20);
 //   rb2.push_back(25);
 
@@ -127,9 +127,9 @@ TEST(ringbuffer_copy_constructor) {
 //   ASSERT_EQUAL(rb.size(), 3);
 // }
 
-// Tests for growing the ring buffer
-TEST(ringbuffer_grow) {
-  RingBuffer<int> rb;
+// Tests for growing the circular buffer
+TEST(circularbuffer_grow) {
+  CircularBuffer<int> rb;
   for (int i = 0; i < 4; ++i) { // initial capacity is 4
     rb.push_back(i);
   }
@@ -147,8 +147,8 @@ TEST(ringbuffer_grow) {
 }
 
 // Tests for overloaded operator
-TEST(ringbuffer_ostream_operator) {
-  RingBuffer<int> rb;
+TEST(circularbuffer_ostream_operator) {
+  CircularBuffer<int> rb;
   rb.push_back(5);
   rb.push_back(10);
   rb.push_back(15);
